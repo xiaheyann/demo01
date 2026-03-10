@@ -10,7 +10,7 @@ try:
 except:
     DEVICE = torch.device("cpu")
 
-DEVICE = torch.device("cpu")
+# DEVICE = torch.device("cpu")
 
 class TransformerEncoderModel(nn.Module):
     def __init__(
@@ -84,7 +84,7 @@ def main():
     vocab_size = 10000
     batch_size = 32
     max_seq_len = 256
-    steps = 100
+    steps = 1000
 
     print("device:", DEVICE)
 
@@ -96,19 +96,21 @@ def main():
         dim_feedforward=512,
         max_len=max_seq_len,
     ).to(DEVICE)
-
+    # 打印模型参数量
+    total_params = sum(p.numel() for p in model.parameters())
+    print("total params:", total_params)
     model.eval()
 
-    # warmup
-    with torch.inference_mode():
-        for _ in range(10):
-            input_ids, padding_mask = generate_variable_batch(
-                batch_size,
-                max_seq_len,
-                vocab_size,
-                DEVICE,
-            )
-            _ = model(input_ids, padding_mask)
+    # # warmup
+    # with torch.inference_mode():
+    #     for _ in range(10):
+    #         input_ids, padding_mask = generate_variable_batch(
+    #             batch_size,
+    #             max_seq_len,
+    #             vocab_size,
+    #             DEVICE,
+    #         )
+    #         _ = model(input_ids, padding_mask)
 
     if DEVICE.type == "npu":
         torch.npu.synchronize()

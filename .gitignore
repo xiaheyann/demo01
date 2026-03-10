@@ -1,1 +1,7 @@
 .venv
+model-bin/
+data/
+kernel_meta/
+logs/
+fusion_result.json
+.env
