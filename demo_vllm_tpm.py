@@ -29,8 +29,8 @@ from vllm import LLM, SamplingParams
 def main():
     llm = LLM(
         model="model-bin/xin7697/Qwen3-14B-W8A8-Ascend",
-        tokenizer="model-bin/xin7697/Qwen3-14B-W8A8-Ascend",
-        quantization="ascend",
+        tokenizer="model-bin/xin7697/Qwen3-14B-W8A8-Ascend", # 非量化版不需要
+        quantization="ascend", # 非量化版不需要
         max_model_len=16384,
         block_size=128,
         gpu_memory_utilization=0.85,
